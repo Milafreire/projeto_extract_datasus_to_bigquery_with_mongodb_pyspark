@@ -2,7 +2,7 @@
 ## Contexto Inicial
 Extração de dados por meio de endpoint e envio dos dados para o Mongo Atlas para armazenamento dos dados com uso de Spark e criação de dataframe usando Pandas, seguido de envio ao datawarehouse no Big Query e visualização no Power BI.
 
-## Tecnologias Utilizada
+## Tecnologias Utilizadas
 Mongo Atlas, Google Cloud Storage, Big Query, Power BI, Spark, PySpark, Pandas.
 
 ## Bibliotecas Utilizadas
