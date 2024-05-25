@@ -27,9 +27,10 @@ from google.cloud import storage
 ```
 
 ## Modelagem de dados
-Os dados estão no seguinte endpoin acessado apenas por senha disponibilizada na documentação do projeto.
-Foi utilizado a lib requests para acessar o endpoint e começar a extração dos dados, depois foi configurado o ambiente do Mongo Atlas para receber o valor dos json existentes na página e armazenados lá.
-O segundo pipeline é responsável por puxar os dados do Mongo Atlas e utilizando spark/pyspark realizado a captura dos campos e renomeados, depois executamos duas queries usando nosso df para criar as colunas: estado_nome que consiste no nome completo dos estados em que os pacientes tomaram as vacinas e a coluna faixa_etaria que enquadra os pacientes de acordo com sua faixa etaria, convertemos no df para um df unico e logo após definimos os schemas de inserção no big query e iniciamos os clientes, optei por primeiro criar tabelas parquet com o nome das dimensões da minha modelagem e depois a partir do parquet inserido no storage enviar ao Big Query.
+Os dados estão no seguinte endpoind acessado apenas por credenciais disponibilizadas na documentação do projeto.
+No primeiro notebook: Extracao_datasus_to_mongodb_atlas.ipynb, foi utilizado a lib requests para acessar o endpoint e começar a extração dos dados, depois foi configurado o ambiente do Mongo Atlas para receber o valor dos json existentes na página e armazenados lá.
+
+O segundo notebook é responsável por puxar os dados do Mongo Atlas e utilizando spark/pyspark realizando a captura dos campos usando explode para expandir os dados do json, depois realizamos realizamos limpeza de nulos e linhas inconsistentes e após renomear as colunas, executamos duas queries utilizando a função sql.spark que cria um novo df com as colunas criadas, após isso unimos os dataframes por meio do paciente_id, as colunas criadas foram: estado_nome que consiste no nome completo dos estados em que os pacientes tomaram as vacinas e a coluna faixa_etaria que enquadra os pacientes de acordo com sua faixa etaria, convertemos em um unico dataframe e depois enviamos ao storage os arquivos parquet já separado por dimensões, inicializamos o cliente big query e então inserimos as tabelas com seus respectivos schemas no big query.
 
 Estrutura das Tabelas
 **Tabela `dim_paciente`**:
